@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.Reactive.Linq;
+using System.Collections.Generic;
 using Xunit;
-using FluentAssertions;
+
 
 namespace Graph.Tests
 {
@@ -27,13 +26,12 @@ namespace Graph.Tests
             };
 
             var graph = new Graph<string>(links);
-            var paths = graph.RoutesBetween("a", "e");
+            List<List<string>> paths = graph.RoutesBetween("a", "e");
 
-            var list = paths.ToEnumerable().ToArray();
-            Assert.Equal(2, list.Length);
+            Assert.Equal(2, paths.Count);
 
-            Assert.Contains(list, l => String.Join("-", l) == "a-b-c-d-e");
-            Assert.Contains(list, l => String.Join("-", l) == "a-h-g-f-e");
+            Assert.Contains(paths, l => String.Join("-", l) == "a-b-c-d-e");
+            Assert.Contains(paths, l => String.Join("-", l) == "a-h-g-f-e");
         }
     }
 }
